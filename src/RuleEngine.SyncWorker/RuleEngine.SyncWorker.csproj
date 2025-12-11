@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-RuleEngine.SyncWorker-e690bc2b-f2f0-4689-8aad-bdefb3736fb5</UserSecretsId>
+        <UserSecretsId>dotnet-RuleEngine.SyncWorker-4f3a3d45-adcd-4159-b0f2-937ba6a7e853</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 

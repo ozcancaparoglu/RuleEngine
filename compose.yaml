@@ -15,19 +15,22 @@
   # 2. Redis
   redis:
     image: redis:alpine
+    container_name: redis
     ports:
       - "6379:6379"
 
   # 3. Zookeeper (For Kafka)
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKPER_TICK_TIME: 2000
 
   # 4. Kafka
   kafka:
     image: confluentinc/cp-kafka:7.3.0
+    container_name: kafka
     depends_on:
       - zookeeper
     ports:
@@ -43,6 +46,7 @@
   # 5. Debezium Connect (The CDC Engine)
   connect:
     image: debezium/connect:2.3
+    container_name: debezium-connect
     ports:
       - "8083:8083"
     environment:
@@ -57,11 +61,12 @@
 
   # 6. Our .NET Processor API
   processor:
+    container_name: processor-api
     build:
       context: .
-      dockerfile: RuleEngine.Processor/Dockerfile
+      dockerfile: src/RuleEngine.Processor/Dockerfile
     ports:
-      - "5000:8080"
+      - "5082:8080"
     environment:
       ConnectionStrings__MongoDb: "mongodb://mongo:27017"
     depends_on:
@@ -70,11 +75,11 @@
 
   # 7. Our .NET Sync Worker
   sync-worker:
+    container_name: sync-worker
     build:
       context: .
-      dockerfile: RuleEngine.SyncWorker/Dockerfile
+      dockerfile: src/RuleEngine.SyncWorker/Dockerfile
     depends_on:
       - kafka
       - redis
       - mongo
-
